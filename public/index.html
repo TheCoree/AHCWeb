@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHCWeb</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #2e2e2e;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .link {
+            text-align: center;
+            display: block; /* Чтобы ссылка была блочным элементом */
+            margin: 20px 0; /* Отступы для ссылки */
+            color: #007bff; /* Цвет ссылки */
+            text-decoration: none; /* Убираем подчеркивание */
+        }
+
+        .link:hover {
+            text-decoration: underline; /* Подчеркивание при наведении */
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .tablink {
+            background-color: #3e3e3e;
+            color: #ffffff;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            flex: 1;
+            margin: 0 5px;
+        }
+
+        .tablink:hover {
+            background-color: #4e4e4e;
+        }
+
+        .tabcontent {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .tabcontent input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: #3e3e3e;
+            color: #ffffff;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            color: #ffffff;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AHCWeb создатель: Corede</h1>
+        <a href="tutorial/" class="link">Туториал тут</a>
+        <div class="tabs">
+            <button class="tablink" onclick="showEncrypt()">Encrypt</button>
+            <button class="tablink" onclick="showDecrypt()">Decrypt</button>
+        </div>
+
+        <div id="encrypt" class="tabcontent hidden">
+            <h2>Зашифровать Текст</h2>
+            <input type="text" id="textToEncrypt" placeholder="Введите текст" />
+            <input type="number" id="mixing" placeholder="Mixing (1-9)" />
+            <input type="number" id="key" placeholder="Key (1-9)" />
+            <button onclick="encryptText()">Зашифровать</button>
+            <div class="result" id="encryptResult"></div>
+            <button id="copyButton" class="hidden" onclick="copyToClipboard()">Скопировать</button>
+        </div>
+        
+        <div id="decrypt" class="tabcontent hidden">
+            <h2>Расшифровать Текст</h2>
+            <input type="text" id="textToDecrypt" placeholder="Введите зашифрованный текст с mixing и key" />
+            <button onclick="decryptText()">Расшифровать</button>
+            <div class="result" id="decryptResult"></div>
+        </div>
+    </div>
+
+    <script>
+        function showEncrypt() {
+            document.getElementById('encrypt').style.display = 'block';
+            document.getElementById('decrypt').style.display = 'none';
+        }
+
+        function showDecrypt() {
+            document.getElementById('decrypt').style.display = 'block';
+            document.getElementById('encrypt').style.display = 'none';
+        }
+
+        function encryptText() {
+            const text = document.getElementById('textToEncrypt').value;
+            const mixing = document.getElementById('mixing').value;
+            const key = document.getElementById('key').value;
+
+            fetch('/encrypt', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `text=${text}&mixing=${mixing}&key=${key}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('encryptResult').innerText = data.result;
+                document.getElementById('copyButton').classList.remove('hidden'); // Показать кнопку копирования
+            });
+        }
+
+        function decryptText() {
+            const text = document.getElementById('textToDecrypt').value;
+
+            fetch('/decrypt', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `text=${text}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('decryptResult').innerText = data.result;
+            });
+        }
+
+        function copyToClipboard() {
+            const encodedText = document.getElementById('encryptResult').innerText;
+            navigator.clipboard.writeText(encodedText)
+                .then(() => {
+                    alert('Текст скопирован в буфер обмена!');
+                })
+                .catch(err => {
+                    alert('Ошибка при копировании текста: ', err);
+                });
+        }
+
+        // Показать вкладку шифрования по умолчанию
+        showEncrypt();
+    </script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1e1e1e;
+    color: #ffffff;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #2e2e2e;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+h1 {
+    text-align: center;
+}
+
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.tablink {
+    background-color: #3e3e3e;
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    flex: 1; /* Изменение для равного распределения кнопок */
+    margin: 0 5px; /* Отступы между кнопками */
+}
+
+.tablink:hover {
+    background-color: #4e4e4e;
+}
+
+.tabcontent {
+    display: none;
+    margin-top: 10px; /* Отступ сверху для контента */
+}
+
+.tabcontent input {
+    width: 100%; /* Полная ширина */
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #3e3e3e;
+    color: #ffffff;
+    box-sizing: border-box; /* Учитываем padding и border в ширине */
+}
+
+button {
+    padding: 10px;
+    background-color: #007bff;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%; /* Полная ширина */
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.result {
+    margin-top: 20px;
+    text-align: center;
+}
