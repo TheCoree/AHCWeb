@@ -4,3 +4,4 @@ GHBdtn -> ˜˦ʪϾҞѢ mixing: 2 key: 2
 ˜˦ʪϾҞѢ mixing: 2 key: 2 -> GHBdtn
 IP: ::ffff:127.0.0.1 | привет -> ⪌⪖⩆⨊⨨⪪ mixing: 2 key: 2
 IP: ::ffff:127.0.0.1 | ⪌⪖⩆⨊⨨⪪ mixing: 2 key: 2 -> привет
+IP: ::ffff:127.0.0.1 | привет -> ⪌⪖⩆⨊⨨⪪ mixing: 2 key: 2
